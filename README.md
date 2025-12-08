@@ -39,10 +39,10 @@ Create a `.env` file in the root directory:
 cp example.env .env
 ```
 
-Or manually create a `.env` file with the following, minimal, content:
+Create a `docker-compose.yml` file in the root directory:
 
-```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/tls_blog?schema=public"
+```bash
+cp docker-compose.yml.example docker-compose.yml
 ```
 
 ### 4. Start Docker Services
