@@ -1,4 +1,4 @@
-# TLS Web
+# TLS Blog Project
 
 A Next.js web application with PostgreSQL database using Prisma ORM.
 
