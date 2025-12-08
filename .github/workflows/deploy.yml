@@ -18,6 +18,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/tls-blog
+            echo $PATH
             node -v
             git pull origin main
             systemctl stop tls-blog
