@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:16
     mem_limit: 512m
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
