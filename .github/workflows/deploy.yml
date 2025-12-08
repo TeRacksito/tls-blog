@@ -17,6 +17,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            source ~/.nvm/nvm.sh
+            nvm use default
             cd /var/www/tls-blog
             echo $PATH
             node -v
