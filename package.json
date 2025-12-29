@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,jsx,json,yaml,yml,css,md,mdx}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,jsx,json,yaml,yml,css,md,mdx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,jsx,json,yaml,yml,css,md,mdx,prisma}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,jsx,json,yaml,yml,css,md,mdx,prisma}\"",
     "prepare": "husky"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
+    "prettier-plugin-prisma": "^5.0.0",
     "prisma": "^7.1.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
