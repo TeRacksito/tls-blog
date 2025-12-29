@@ -1,5 +1,5 @@
-import { PrismaClient } from "@/app/generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from '@/app/generated/prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -31,7 +31,7 @@ export default async function Home() {
                 <span className="font-medium">Title:</span> {testTitle.title}
               </p>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                <span className="font-medium">Description:</span>{" "}
+                <span className="font-medium">Description:</span>{' '}
                 {testTitle.description}
               </p>
               <p className="mt-4 text-sm font-medium text-green-600 dark:text-green-400">
