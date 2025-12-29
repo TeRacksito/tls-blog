@@ -36,9 +36,10 @@ It is not needed to create any kind of README, MD files or similar documentation
 
   ````prisma
   model Post {
-    id    Int    @id @default(autoincrement())
-    uuid  String @unique @default(uuid())
+    id   Int    @id @default(autoincrement())
+    uuid String @unique @default(uuid())
   }
+  
   /```
   ````
 
@@ -55,10 +56,11 @@ It is not needed to create any kind of README, MD files or similar documentation
 
   ````prisma
   model Base {
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
     deletedAt DateTime?
   }
+  
   /```
   ````
 
@@ -195,6 +197,7 @@ It is not needed to create any kind of README, MD files or similar documentation
   generator client {
     previewFeatures = ["clientExtensions", "interactiveTransactions"]
   }
+  
   /```
   ````
 
