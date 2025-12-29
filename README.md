@@ -51,13 +51,14 @@ cp docker-compose.yml.example docker-compose.yml
 
 > [!TIP]
 > If you have installed Microsoft's Docker extension for VS Code, you can also start the services by simply
-clicking the "Run all services" button at the top of the [docker-compose.yml](https://github.com/TeRacksito/tls-blog/blob/main/docker-compose.yml) file.
+> clicking the "Run all services" button at the top of the [docker-compose.yml](https://github.com/TeRacksito/tls-blog/blob/main/docker-compose.yml) file.
 
 ```bash
 docker-compose up -d
 ```
 
 This will:
+
 - Start a PostgreSQL 16 database
 - Create a database named `tls_blog`
 - Expose it on port `5432`
@@ -78,6 +79,7 @@ pnpx prisma migrate dev
 ```
 
 This command will:
+
 - Create the database tables
 - Generate the Prisma Client
 - Apply all pending migrations
@@ -155,27 +157,32 @@ tls-web/
 ### Docker Issues
 
 **Database won't start:**
+
 - Ensure Docker Desktop is running
 - Check if port 5432 is already in use.
 - Try restarting Docker and Docker Desktop.
 
 **Connection refused:**
+
 - Wait a few seconds for the database to be fully ready
 - Check health status: `docker-compose ps`
 
 ### Prisma Issues
 
 **Migration fails:**
+
 - Ensure the database is running: `docker-compose ps`
 - Reset the database: `pnpx prisma migrate reset`
 - Check DATABASE_URL in `.env` is correct. Try connecting with a database client.
 
 **Prisma Client not found:**
+
 - Regenerate the client: `pnpx prisma generate`
 
 ### Next.js Issues
 
 **Port 3000 already in use:**
+
 - Use a different port: `pnpm dev -- -p 3001`
 - Or kill the process using port 3000
 
