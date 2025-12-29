@@ -18,7 +18,6 @@ It is not needed to create any kind of README, MD files or similar documentation
 3. **Comments**: Use JSDoc for public methods and classes.
 4. **Exports**: One export per file.
 5. **Naming**:
-
    - **Classes/interfaces** → `PascalCase`
    - **Variables/functions** → `camelCase`
    - **Files/directories** → `kebab-case`

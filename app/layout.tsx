@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "TLS Web",
-  description: "TLS Web Application",
+  title: 'TLS Web',
+  description: 'TLS Web Application',
 };
 
 export default function RootLayout({
