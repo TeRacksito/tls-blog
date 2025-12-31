@@ -31,9 +31,12 @@ model Project {
   title         String
   description   String?
   status        ProjectStatus @default(PLANNING)
+  worldname     String?
+  mapname       String?
   x             Float?
   y             Float?
   z             Float?
+  zoom          Int?
   coverImage    String?
   tags          String[]
   ownerUsername String        @db.VarChar(255)
@@ -43,4 +46,5 @@ model Project {
   @@index([ownerUsername])
   @@index([status])
   @@index([createdAt])
+  @@index([worldname])
 }
