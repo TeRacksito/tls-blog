@@ -26,33 +26,21 @@ enum ProjectStatus {
   COMPLETED
 }
 
-model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String?
-  projects  Project[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  @@index([email])
-}
-
 model Project {
-  id          Int           @id @default(autoincrement())
-  title       String
-  description String?
-  status      ProjectStatus @default(PLANNING)
-  x           Float?
-  y           Float?
-  z           Float?
-  coverImage  String?
-  tags        String[]
-  ownerId     Int
-  owner       User          @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id            Int           @id @default(autoincrement())
+  title         String
+  description   String?
+  status        ProjectStatus @default(PLANNING)
+  x             Float?
+  y             Float?
+  z             Float?
+  coverImage    String?
+  tags          String[]
+  ownerUsername String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
-  @@index([ownerId])
+  @@index([ownerUsername])
   @@index([status])
   @@index([createdAt])
 }
