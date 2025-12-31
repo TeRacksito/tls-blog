@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { AuthProvider } from '@/components/auth/AuthProvider';
+import { LoginModal } from '@/components/auth/LoginModal';
 
 export const metadata: Metadata = {
   title: 'TLS Web',
@@ -13,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <AuthProvider>
+          {children}
+          <LoginModal />
+        </AuthProvider>
+      </body>
     </html>
   );
 }
