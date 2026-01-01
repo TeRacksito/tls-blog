@@ -19,3 +19,32 @@ model ConnectionTestTitle {
   title       String
   description String
 }
+
+enum ProjectStatus {
+  PLANNING
+  BUILDING
+  COMPLETED
+}
+
+model Project {
+  id            Int           @id @default(autoincrement())
+  title         String
+  description   String?
+  status        ProjectStatus @default(PLANNING)
+  worldname     String?
+  mapname       String?
+  x             Float?
+  y             Float?
+  z             Float?
+  zoom          Int?
+  coverImage    String?
+  tags          String[]
+  ownerUsername String        @db.VarChar(255)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([ownerUsername])
+  @@index([status])
+  @@index([createdAt])
+  @@index([worldname])
+}
