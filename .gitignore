@@ -43,6 +43,3 @@ docker-compose*.yml
 next-env.d.ts
 
 /app/generated/prisma
-
-# package managers
-package-lock.json
