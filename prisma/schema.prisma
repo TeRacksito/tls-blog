@@ -42,9 +42,25 @@ model Project {
   ownerUsername String        @db.VarChar(255)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+  milestones    Milestone[]
 
   @@index([ownerUsername])
   @@index([status])
   @@index([createdAt])
   @@index([worldname])
+}
+
+model Milestone {
+  id          Int      @id @default(autoincrement())
+  projectId   Int
+  project     Project  @relation(fields: [projectId], references: [id])
+  title       String
+  description String?
+  order       Int      @default(0)
+  isCompleted Boolean  @default(false)
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([projectId])
+  @@index([order])
 }
