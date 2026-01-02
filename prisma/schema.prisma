@@ -44,10 +44,7 @@ model Project {
   updatedAt     DateTime      @updatedAt
   milestones    Milestone[]
 
-  @@index([ownerUsername])
-  @@index([status])
-  @@index([createdAt])
-  @@index([worldname])
+  @@index([ownerUsername, status, createdAt, worldname])
 }
 
 model Milestone {
@@ -62,6 +59,5 @@ model Milestone {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@index([projectId])
-  @@index([order])
+  @@index([projectId, order])
 }
