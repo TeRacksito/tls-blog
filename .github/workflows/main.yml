@@ -2,21 +2,27 @@ name: Protect main from bad PR
 
 on:
   pull_request:
-    branches:
-      - main
 
 jobs:
   enforce-source-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Check source branch
+      - name: Enforce dev to main rule
         run: |
-          echo "Base: ${{ github.event.pull_request.base.ref }}"
-          echo "Head: ${{ github.event.pull_request.head.ref }}"
+          BASE="${{ github.event.pull_request.base.ref }}"
+          HEAD="${{ github.event.pull_request.head.ref }}"
 
-          if [ "${{ github.event.pull_request.head.ref }}" != "dev" ]; then
-            echo "Pull requests to main must come from dev only."
+          echo "Base branch: $BASE"
+          echo "Head branch: $HEAD"
+
+          if [ "$BASE" != "main" ]; then
+            echo "PR does not target main. Rule not applicable."
+            exit 0
+          fi
+
+          if [ "$HEAD" != "dev" ]; then
+            echo "Pull requests to main must come from dev."
             exit 1
           fi
 
-          echo "Source branch is dev."
+          echo "Valid PR: dev to main"
