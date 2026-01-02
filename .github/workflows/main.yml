@@ -1,0 +1,22 @@
+name: Protect main from bad PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  enforce-source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        run: |
+          echo "Base: ${{ github.event.pull_request.base.ref }}"
+          echo "Head: ${{ github.event.pull_request.head.ref }}"
+
+          if [ "${{ github.event.pull_request.head.ref }}" != "dev" ]; then
+            echo "Pull requests to main must come from dev only."
+            exit 1
+          fi
+
+          echo "Source branch is dev."
