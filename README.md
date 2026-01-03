@@ -1,6 +1,6 @@
 # TLS Blog Project
 
-A Next.js web application with PostgreSQL database using Prisma ORM.
+A Next.js web application with a PostgreSQL database using Prisma ORM.
 
 ## Prerequisites
 
@@ -86,7 +86,7 @@ This command will:
 
 ### 6. Generate Prisma Client
 
-When changes are made to the Prisma schema, regeneration to the Prisma Client is needed:
+When changes are made to the Prisma schema, regeneration of the Prisma Client is needed:
 
 ```bash
 pnpx prisma generate
@@ -188,7 +188,7 @@ tls-web/
 
 ## Database Access
 
-Me recommend using a database client like [DBeaver](https://dbeaver.io/) to connect to the PostgreSQL database.
+We recommend using a database client like [DBeaver](https://dbeaver.io/) to connect to the PostgreSQL database.
 Alternatively, you can use the `psql` command line tool.
 
 ```bash
