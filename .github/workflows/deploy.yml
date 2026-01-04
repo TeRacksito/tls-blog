@@ -24,7 +24,7 @@ jobs:
             # - configuration
             APP_DIR="/var/www/tls-blog"
             set -e              # <- Exit if any command fails
-            set -o pipefail     # <- Exit if any CI/CD pipe fails, not only the last one
+            set -o pipefail     # <- Exit if any pipeline command fails, not only the last one
             source ~/.nvm/nvm.sh
             nvm use default
 
@@ -34,14 +34,15 @@ jobs:
               echo "git pull failed. Forcing remote to local state."
               git fetch origin --prune --all
               git reset --hard origin/main || {
-                echo "git reset failed unexpectedly. Not possible to update local changes."
+                echo "git reset failed unexpectedly. Unable to update local changes."
                 echo "Aborting deploy."
                 exit 1
               }
             fi
 
             # - ensure dependencies
-            pnpm i & docker compose up -d --remove-orphans & wait # <- execute commands async and wait for them all
+            pnpm i
+            docker compose up -d --remove-orphans
 
             # - update database
             pnpx prisma migrate deploy
