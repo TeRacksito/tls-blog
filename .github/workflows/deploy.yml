@@ -21,16 +21,35 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # - configuration
+            APP_DIR="/var/www/tls-blog"
+            set -e              # <- Exit if any command fails
+            set -o pipefail     # <- Exit if any CI/CD pipe fails, not only the last one
             source ~/.nvm/nvm.sh
             nvm use default
-            cd /var/www/tls-blog
-            echo $PATH
-            node -v
-            git pull origin main
-            systemctl stop tls-blog
-            pnpm i & docker compose up -d & wait
+
+            # - update local changes
+            cd $APP_DIR
+            if ! git pull origin main; then
+              echo "git pull failed. Forcing remote to local state."
+              git fetch origin --prune --all
+              git reset --hard origin/main || {
+                echo "git reset failed unexpectedly. Not possible to update local changes."
+                echo "Aborting deploy."
+                exit 1
+              }
+            fi
+
+            # - ensure dependencies
+            pnpm i & docker compose up -d --remove-orphans & wait # <- execute commands async and wait for them all
+
+            # - update database
             pnpx prisma migrate deploy
             pnpx prisma generate
             pnpx prisma db seed
+
+            # - build app
             pnpm build
-            systemctl start tls-blog
+
+            # - restart production instance
+            systemctl restart tls-blog
