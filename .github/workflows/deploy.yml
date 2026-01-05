@@ -32,7 +32,7 @@ jobs:
             cd $APP_DIR
             if ! git pull origin main; then
               echo "git pull failed. Forcing remote to local state."
-              git fetch origin --prune --all
+              git fetch --prune --all
               git reset --hard origin/main || {
                 echo "git reset failed unexpectedly. Unable to update local changes."
                 echo "Aborting deploy."
