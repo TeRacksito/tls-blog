@@ -1,3 +1,4 @@
+import { prisma } from '@/prisma/prisma-client';
 import { NextResponse } from 'next/server';
 import { contractFromJson } from '@prisma/orm-postgres/static';
 import { Contract } from '@/app/generated/prisma/contract';
