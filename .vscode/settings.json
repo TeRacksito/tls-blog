@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["postgres"]
+  "cSpell.words": [
+    "autoincrement",
+    "postgres",
+    "datasource",
+    "nextapi",
+    "postgresql"
+  ],
+  "cSpell.enabled": true
 }
