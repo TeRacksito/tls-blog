@@ -3,7 +3,7 @@
  * @param key - The environment variable name.
  * @returns true if the variable exists on process.env.
  */
-function isSet(key: string | undefined): boolean {
+function isSet(key: string): boolean {
   if (!key) return false;
   return typeof process.env[key] !== 'undefined';
 }
@@ -13,7 +13,7 @@ function isSet(key: string | undefined): boolean {
  * @param key - The environment variable name.
  * @returns true if the variable exists and contains a non-whitespace value.
  */
-function isSetAndNotEmpty(key: string | undefined): boolean {
+function isSetAndNotEmpty(key: string): boolean {
   if (!key) return false;
   const value = process.env[key];
   if (typeof value !== 'string') return false;
