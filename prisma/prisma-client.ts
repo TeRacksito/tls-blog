@@ -1,7 +1,13 @@
 import { PrismaClient } from '../app/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const databaseUrl = process.env.DATABASE_URL;
+
+if (isSetAndNotEmpty(databaseUrl)) {
+  throw new Error('DATABASE_URL environment variable is not set or is empty.');
+}
+
+const adapter = new PrismaPg({ connectionString: databaseUrl });
 
 export const prisma = new PrismaClient({ adapter }).$extends({
   result: {
