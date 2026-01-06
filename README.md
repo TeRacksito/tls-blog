@@ -75,7 +75,7 @@ If you want, instead, to see the logs in the terminal, run without `-d`.
 Once the database is running, apply the migrations to set up the schema:
 
 ```bash
-pnpx prisma migrate deploy
+pnpx prisma migrate dev
 ```
 
 This command will:
