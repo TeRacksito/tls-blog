@@ -65,9 +65,8 @@ model Milestone {
 
 model ResourceItem {
   id           Int                 @id @default(autoincrement())
-  itemName     String              @unique
-  itemIcon     String?
-  itemType     String?
+  name         String              @unique
+  icon         String?
   description  String?
   minecraftId  String?             @unique
   category     String?
@@ -77,8 +76,7 @@ model ResourceItem {
   updatedAt    DateTime            @updatedAt
   milestones   MilestoneResource[]
 
-  @@index([itemType, itemName])
-  @@index([itemName])
+  @@index([name])
   @@index([minecraftId])
   @@index([category])
 }
