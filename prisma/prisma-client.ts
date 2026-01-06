@@ -1,7 +1,7 @@
 import { PrismaClient } from '../app/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
-if (isSetAndNotEmpty('DATABASE_URL')) {
+if (!isSetAndNotEmpty('DATABASE_URL')) {
   throw new Error('DATABASE_URL environment variable is not set or is empty.');
 }
 
