@@ -9,26 +9,38 @@ if (isSetAndNotEmpty(databaseUrl)) {
 
 const adapter = new PrismaPg({ connectionString: databaseUrl });
 
-export const prisma = new PrismaClient({
-  adapter,
-  log:
-    process.env.NODE_ENV === 'development'
-      ? ['query', 'info', 'warn', 'error']
-      : ['warn', 'error'],
-}).$extends({
-  result: {
-    milestoneResource: {
-      progressPercentage: {
-        needs: { currentQuantity: true, targetQuantity: true },
-        compute(resource) {
-          if (resource.targetQuantity === 0) return 0;
-          return Math.round(
-            (resource.currentQuantity / resource.targetQuantity) * 100
-          );
+const createPrismaClient = () => {
+  return new PrismaClient({
+    adapter,
+    log:
+      process.env.NODE_ENV === 'development'
+        ? ['query', 'info', 'warn', 'error']
+        : ['warn', 'error'],
+  }).$extends({
+    result: {
+      milestoneResource: {
+        progressPercentage: {
+          needs: { currentQuantity: true, targetQuantity: true },
+          compute(resource) {
+            if (resource.targetQuantity === 0) return 0;
+            return Math.round(
+              (resource.currentQuantity / resource.targetQuantity) * 100
+            );
+          },
         },
       },
     },
-  },
-});
+  });
+};
+
+declare global {
+  var prisma: ReturnType<typeof createPrismaClient> | undefined;
+}
+
+export const prisma = globalThis.prisma ?? createPrismaClient();
+
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.prisma = prisma;
+}
 
 export type ExtendedPrismaClient = typeof prisma;
