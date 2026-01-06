@@ -1,13 +1,11 @@
 import { PrismaClient } from '../app/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 
-const databaseUrl = process.env.DATABASE_URL;
-
-if (isSetAndNotEmpty(databaseUrl)) {
+if (isSetAndNotEmpty('DATABASE_URL')) {
   throw new Error('DATABASE_URL environment variable is not set or is empty.');
 }
 
-const adapter = new PrismaPg({ connectionString: databaseUrl });
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 
 const createPrismaClient = () => {
   return new PrismaClient({
