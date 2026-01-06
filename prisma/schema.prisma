@@ -78,6 +78,8 @@ model ResourceItem {
   milestones   MilestoneResource[]
 
   @@index([itemType, itemName])
+  @@index([itemName])
+  @@index([minecraftId])
   @@index([category])
 }
 
@@ -96,4 +98,6 @@ model MilestoneResource {
   @@id([milestoneId, resourceId])
   @@index([resourceId])
   @@index([milestoneId, fulfilled])
+  @@index([fulfilled, milestoneId])
+  @@index([milestoneId, targetQuantity, currentQuantity])
 }
