@@ -119,6 +119,7 @@ You should see the database connection test page displaying the seeded data.
 - `pnpm start` - Start the production server
 - `pnpm lint` - Run ESLint
 - `pnpx prisma generate` - Regenerate Prisma Client after schema changes
+- `pnpx prisma migrate deploy` - Apply new migrations
 - `pnpx prisma migrate dev` - Create and apply new migrations
 - `pnpx prisma migrate reset` - Reset the database and reapply migrations
 - `pnpx prisma db seed` - Seed the database with initial data
