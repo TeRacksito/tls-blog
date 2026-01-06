@@ -89,13 +89,11 @@ model MilestoneResource {
   targetQuantity  Int
   currentQuantity Int          @default(0)
   fulfilled       Boolean      @default(false)
-  order           Int          @default(0)
   notes           String?
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 
   @@id([milestoneId, resourceId])
-  @@index([milestoneId, order])
   @@index([resourceId])
   @@index([milestoneId, fulfilled])
 }
