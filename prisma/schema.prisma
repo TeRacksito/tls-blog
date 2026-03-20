@@ -108,7 +108,7 @@ model Update {
   project           Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
   title             String
   content           Json
-  /* api must extract images from content. Objective: better image accessibility */
+  /// api must extract images from content. Objective: better image accessibility
   images            String[]
   linkedMilestoneId Int?
   linkedMilestone   Milestone? @relation(fields: [linkedMilestoneId], references: [id], onDelete: SetNull)
