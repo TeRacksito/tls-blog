@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:16
     mem_limit: 512m
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -24,6 +24,26 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+  dbgate:
+    image: dbgate/dbgate
+    container_name: dbgate_web
+    restart: always
+    ports:
+      - "8081:3000"
+    environment:
+      CONNECTIONS: postgres_db
+      LABEL_postgres_db: "TLS Blog DB"
+      SERVER_postgres_db: postgres
+      USER_postgres_db: postgres
+      PASSWORD_postgres_db: postgres
+      DATABASE_postgres_db: tls_blog
+      ENGINE_postgres_db: postgres@dbgate-plugin-postgres
+    networks:
+      - prisma-network
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 networks:
   prisma-network:

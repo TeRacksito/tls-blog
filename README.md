@@ -68,7 +68,8 @@ Because the command runs in detached mode (`-d`), you can check the logs in Dock
 If you want, instead, to see the logs in the terminal, run without `-d`.
 
 > [!TIP]
-> We recommend using a PostgreSQL-compatible database Client, like [DBeaver](https://dbeaver.io/), to connect to the database and inspect data visually.
+> We recommend using the out-of-the-box DbGate service included in the `docker-compose.yml` for a visual database management interface. It will be available at [http://localhost:8081](http://localhost:8081).
+> If this doesn't work, you can use a PostgreSQL-compatible database Client, like [DBeaver](https://dbeaver.io/), to connect to the database and inspect data visually.
 
 ### 5. Run Prisma Migrations
 
