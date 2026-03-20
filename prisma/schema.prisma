@@ -43,6 +43,7 @@ model Project {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   milestones    Milestone[]
+  updates       Update[]
 
   @@index([ownerUsername, status, createdAt, worldname])
 }
@@ -59,6 +60,7 @@ model Milestone {
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @updatedAt
   resources   MilestoneResource[]
+  updates     Update[]
 
   @@index([projectId, order])
 }
@@ -98,4 +100,22 @@ model MilestoneResource {
   @@index([milestoneId, fulfilled])
   @@index([fulfilled, milestoneId])
   @@index([milestoneId, targetQuantity, currentQuantity])
+}
+
+model Update {
+  id                Int        @id @default(autoincrement())
+  projectId         Int
+  project           Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title             String
+  content           Json
+  /* api must extract images from content. Objective: better image accessibility */
+  images            String[]
+  linkedMilestoneId Int?
+  linkedMilestone   Milestone? @relation(fields: [linkedMilestoneId], references: [id], onDelete: SetNull)
+  authorId          String     @db.VarChar(255)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  @@index([projectId, createdAt(sort: Desc)])
+  @@index([authorId])
 }
