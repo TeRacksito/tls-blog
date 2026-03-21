@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import type { AuthUser } from '@/lib/types/auth';
+import { authClient } from '@/lib/client-api/auth-client';
 
 interface AuthContextType {
   user: AuthUser | null;
@@ -47,22 +48,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    */
   const checkAuth = useCallback(async (silent = false) => {
     try {
-      const response = await fetch('/nextapi/verify', {
-        method: 'GET',
-        credentials: 'include',
-      });
+      const authUser = await authClient.verifySession();
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.valid) {
-          setUser({
-            user: data.user,
-            iat: 0,
-            exp: data.exp,
-          });
-          if (!silent) setIsLoading(false);
-          return true;
-        }
+      if (authUser) {
+        setUser(authUser);
+        if (!silent) setIsLoading(false);
+        return true;
       }
 
       setUser(null);
@@ -121,30 +112,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    */
   const login = useCallback(
     async (username: string, password: string) => {
-      const response = await fetch('/nextapi/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user: username, pass: password }),
-        credentials: 'include',
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Login failed');
-      }
-
-      const data = await response.json();
-      setUser({
-        user: data.user,
-        iat: 0,
-        exp: 0,
-      });
+      await authClient.login(username, password);
+      await checkAuth(true);
 
       setIsLoginModalOpen(false);
       setError(null);
       router.refresh();
     },
-    [router]
+    [checkAuth, router]
   );
 
   /**
@@ -152,24 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    */
   const logout = useCallback(async () => {
     try {
-      const csrfResponse = await fetch('/nextapi/csrf', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
-      let csrfToken = '';
-      if (csrfResponse.ok) {
-        const csrfBody = (await csrfResponse.json()) as { token?: string };
-        csrfToken = csrfBody.token ?? '';
-      }
-
-      await fetch('/nextapi/logout', {
-        method: 'POST',
-        headers: {
-          'x-csrf-token': csrfToken,
-        },
-        credentials: 'include',
-      });
+      await authClient.logout();
 
       setUser(null);
       router.push('/');
