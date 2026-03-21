@@ -38,7 +38,7 @@ model Project {
   z               Float?
   zoom            Int?
   coverImage      String?
-  tags            String[]
+  tags            String[]         @default([])
   ownerUsername   String           @db.VarChar(255)
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
@@ -109,7 +109,7 @@ model TimelineUpdate {
   title             String
   content           Json
   /// api must extract images from content. Objective: better image accessibility
-  images            String[]
+  images            String[]   @default([])
   linkedMilestoneId Int?
   linkedMilestone   Milestone? @relation(fields: [linkedMilestoneId], references: [id], onDelete: SetNull)
   authorId          String     @db.VarChar(255)
