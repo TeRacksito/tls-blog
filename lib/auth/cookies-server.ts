@@ -8,7 +8,7 @@ import { NextRequest } from 'next/server';
 export async function setAuthToken(token: string): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.set(TOKEN_COOKIE_NAME, token, {
-    httpOnly: false,
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: 60 * 60,
