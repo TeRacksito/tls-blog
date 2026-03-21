@@ -11,6 +11,7 @@ const PUBLIC_API_ROUTES = [
   '/nextapi/verify',
   '/nextapi/logout',
   '/nextapi/db-test',
+  '/nextapi/csrf',
 ];
 
 export async function proxy(request: NextRequest) {
