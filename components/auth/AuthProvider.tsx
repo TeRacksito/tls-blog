@@ -9,10 +9,6 @@ import {
   type ReactNode,
 } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import {
-  deleteAuthTokenClient,
-  getAuthTokenClient,
-} from '@/lib/auth/cookies-client';
 import type { AuthUser } from '@/lib/types/auth';
 
 interface AuthContextType {
@@ -51,14 +47,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    */
   const checkAuth = useCallback(async (silent = false) => {
     try {
-      const token = getAuthTokenClient();
-
-      if (!token) {
-        setUser(null);
-        if (!silent) setIsLoading(false);
-        return false;
-      }
-
       const response = await fetch('/nextapi/verify', {
         method: 'GET',
         credentials: 'include',
@@ -77,13 +65,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      deleteAuthTokenClient();
       setUser(null);
       if (!silent) setIsLoading(false);
       return false;
     } catch (error) {
       console.error('Auth check failed:', error);
-      deleteAuthTokenClient();
       setUser(null);
       if (!silent) setIsLoading(false);
       return false;
@@ -166,12 +152,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    */
   const logout = useCallback(async () => {
     try {
-      await fetch('/nextapi/logout', {
-        method: 'POST',
+      const csrfResponse = await fetch('/nextapi/csrf', {
+        method: 'GET',
         credentials: 'include',
       });
 
-      deleteAuthTokenClient();
+      let csrfToken = '';
+      if (csrfResponse.ok) {
+        const csrfBody = (await csrfResponse.json()) as { token?: string };
+        csrfToken = csrfBody.token ?? '';
+      }
+
+      await fetch('/nextapi/logout', {
+        method: 'POST',
+        headers: {
+          'x-csrf-token': csrfToken,
+        },
+        credentials: 'include',
+      });
+
       setUser(null);
       router.push('/');
       router.refresh();
