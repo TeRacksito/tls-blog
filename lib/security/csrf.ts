@@ -1,9 +1,7 @@
 import crypto from 'node:crypto';
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
-
-export const CSRF_COOKIE_NAME = 'csrf_token';
-export const CSRF_HEADER_NAME = 'x-csrf-token';
+import { CSRF_HEADER_NAME, CSRF_COOKIE_NAME } from '../types/csrf';
 
 function createToken(): string {
   return crypto.randomBytes(32).toString('hex');

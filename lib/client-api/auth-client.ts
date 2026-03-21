@@ -1,7 +1,7 @@
 'use client';
 
 import type { AuthUser } from '@/lib/types/auth';
-import { CSRF_HEADER_NAME } from '../security/csrf';
+import { CSRF_HEADER_NAME } from '../types/csrf';
 
 interface VerifyResponse {
   valid: boolean;
