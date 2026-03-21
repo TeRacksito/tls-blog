@@ -10,7 +10,11 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,jsx,json,yaml,yml,css,md,mdx,prisma}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,jsx,json,yaml,yml,css,md,mdx,prisma}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "p:gen": "prisma generate",
+    "p:mig": "prisma migrate dev",
+    "p:res": "prisma migrate reset",
+    "p:sed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
