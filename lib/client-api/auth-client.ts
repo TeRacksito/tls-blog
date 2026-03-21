@@ -1,7 +1,7 @@
 'use client';
 
 import type { AuthUser } from '@/lib/types/auth';
-import { CSRF_HEADER_NAME } from '../types/csrf';
+import { fetchApi } from '@/lib/client-api/http-client';
 
 interface VerifyResponse {
   valid: boolean;
@@ -14,15 +14,10 @@ interface LoginResponse {
   user: string;
 }
 
-interface CsrfResponse {
-  token?: string;
-}
-
 export const authClient = {
   async verifySession(): Promise<AuthUser | null> {
-    const response = await fetch('/nextapi/verify', {
+    const response = await fetchApi('/nextapi/verify', {
       method: 'GET',
-      credentials: 'include',
     });
 
     if (!response.ok) {
@@ -43,11 +38,10 @@ export const authClient = {
   },
 
   async login(username: string, password: string): Promise<AuthUser> {
-    const response = await fetch('/nextapi/auth', {
+    const response = await fetchApi('/nextapi/auth', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user: username, pass: password }),
-      credentials: 'include',
     });
 
     if (!response.ok) {
@@ -65,23 +59,8 @@ export const authClient = {
   },
 
   async logout(): Promise<void> {
-    const csrfResponse = await fetch('/nextapi/csrf', {
-      method: 'GET',
-      credentials: 'include',
-    });
-
-    let csrfToken = '';
-    if (csrfResponse.ok) {
-      const csrfBody = (await csrfResponse.json()) as CsrfResponse;
-      csrfToken = csrfBody.token ?? '';
-    }
-
-    const response = await fetch('/nextapi/logout', {
+    const response = await fetchApi('/nextapi/logout', {
       method: 'POST',
-      headers: {
-        [CSRF_HEADER_NAME]: csrfToken,
-      },
-      credentials: 'include',
     });
 
     if (!response.ok) {
