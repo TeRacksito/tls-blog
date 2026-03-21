@@ -14,7 +14,7 @@
     "p:gen": "prisma generate",
     "p:mig": "prisma migrate dev",
     "p:res": "prisma migrate reset",
-    "p:sed": "prisma db seed"
+    "p:seed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
