@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { deleteAuthToken } from '@/lib/auth/cookies-server';
 import { getServerAuthSession } from '@/lib/auth/get-server-auth-session';
 
 /**
@@ -12,6 +13,7 @@ export async function GET() {
     const session = await getServerAuthSession();
 
     if (!session) {
+      await deleteAuthToken();
       return NextResponse.json({ valid: false }, { status: 401 });
     }
 
