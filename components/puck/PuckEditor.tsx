@@ -37,6 +37,7 @@ export default function PuckEditor({ slug }: PuckEditorProps) {
       try {
         setIsLoading(true);
         setError(null);
+        setTitle(normalizedSlug);
 
         const pageResponse = await fetchApi(
           `/nextapi/editor/${normalizedSlug}`
@@ -45,6 +46,8 @@ export default function PuckEditor({ slug }: PuckEditorProps) {
         if (pageResponse.status === 404) {
           setPageData(DEFAULT_PUCK_DATA);
           setRevision(0);
+          setTitle(normalizedSlug);
+          setIsPublished(false);
           return;
         }
 
