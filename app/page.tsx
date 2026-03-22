@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/components/auth/auth-provider';
+import { useAuth } from '@/components/featured/auth/auth-provider';
 
 interface ConnectionTestData {
   id: number;
