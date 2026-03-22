@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/components/auth/AuthProvider';
+import { useAuth } from '@/components/auth/auth-provider';
 import { useEffect } from 'react';
 
 interface ProtectedRouteProps {

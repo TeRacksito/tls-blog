@@ -1,8 +1,8 @@
 'use client';
 
-import { useAuth } from '@/components/auth/AuthProvider';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/components/auth/auth-provider';
 
 interface ConnectionTestData {
   id: number;

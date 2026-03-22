@@ -1,5 +1,5 @@
-import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
-import PuckEditor from '@/components/puck/PuckEditor';
+import { ProtectedRoute } from '@/components/auth/protected-route';
+import PuckEditor from '@/components/puck/puck-editor';
 
 interface EditorPageProps {
   params: Promise<{ slug: string }>;
