@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { LoginModal } from '@/components/auth/login-modal';
+import { LoginModal } from '@/components/featured/auth/login-modal';
 import {
   JetBrains_Mono,
   Nunito,
@@ -8,7 +8,7 @@ import {
   PT_Serif,
 } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import { AuthProvider } from '@/components/auth/auth-provider';
+import { AuthProvider } from '@/components/featured/auth/auth-provider';
 
 const nunito = Nunito({ subsets: ['latin'], variable: '--font-sans' });
 const ptSerif = PT_Serif({

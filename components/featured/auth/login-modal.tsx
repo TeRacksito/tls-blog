@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/components/auth/auth-provider';
+import { useAuth } from '@/components/featured/auth/auth-provider';
 import { useRouter } from 'next/navigation';
 
 export function LoginModal() {
