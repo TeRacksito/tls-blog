@@ -54,17 +54,19 @@
   --font-sans: Nunito, sans-serif;
   --font-serif: PT Serif, serif;
   --font-mono: JetBrains Mono, monospace;
+  --font-pixel: 'Press Start 2P', 'VT323', monospace;
 
-  --radius: 0.625rem;
+  --radius: 0.25rem;
+  --pixel-border-width: 2px;
 
-  --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 8px 10px -1px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
+  --shadow-2xs: 1px 1px 0 0 rgb(0 0 0 / 0.2);
+  --shadow-xs: 1px 1px 0 0 rgb(0 0 0 / 0.25);
+  --shadow-sm: 2px 2px 0 0 rgb(0 0 0 / 0.25);
+  --shadow: 2px 2px 0 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 3px 3px 0 0 rgb(0 0 0 / 0.3);
+  --shadow-lg: 4px 4px 0 0 rgb(0 0 0 / 0.3);
+  --shadow-xl: 6px 6px 0 0 rgb(0 0 0 / 0.3);
+  --shadow-2xl: 8px 8px 0 0 rgb(0 0 0 / 0.35);
 }
 
 .dark {
@@ -102,12 +104,12 @@
 
   --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
   --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 8px 10px -1px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
+  --shadow-sm: 2px 2px 0 0 rgb(0 0 0 / 0.35);
+  --shadow: 2px 2px 0 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 3px 3px 0 0 rgb(0 0 0 / 0.45);
+  --shadow-lg: 4px 4px 0 0 rgb(0 0 0 / 0.5);
+  --shadow-xl: 6px 6px 0 0 rgb(0 0 0 / 0.5);
+  --shadow-2xl: 8px 8px 0 0 rgb(0 0 0 / 0.55);
 }
 
 @theme inline {
@@ -160,4 +162,28 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+}
+
+body {
+  background-image:
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--background) 92%, black 8%) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--background) 92%, black 8%) 1px,
+      transparent 1px
+    );
+  background-size: 12px 12px;
+  image-rendering: pixelated;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-pixel);
+  line-height: 1.35;
 }
