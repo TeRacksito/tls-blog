@@ -1,4 +1,7 @@
 {
   "cSpell.words": ["autoincrement", "datasource", "nextapi", "postgresql"],
-  "cSpell.enabled": true
+  "cSpell.enabled": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }
