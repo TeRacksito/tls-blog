@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  baseline-browser-mapping: latest
+
 importers:
 
   .:
@@ -70,7 +73,7 @@ importers:
         specifier: ^19
         version: 19.2.3(@types/react@19.2.7)
       baseline-browser-mapping:
-        specifier: ^2.10.9
+        specifier: latest
         version: 2.10.10
       eslint:
         specifier: ^9

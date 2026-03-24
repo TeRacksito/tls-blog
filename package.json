@@ -19,9 +19,9 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
+    "@puckeditor/core": "^0.21.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "@puckeditor/core": "^0.21.1",
     "dotenv": "^17.2.3",
     "lucide-react": "^0.577.0",
     "next": "16.0.7",
@@ -39,7 +39,7 @@
     "@types/pg": "^8.15.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "baseline-browser-mapping": "^2.10.9",
+    "baseline-browser-mapping": "latest",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
     "eslint-config-prettier": "^10.1.8",
@@ -51,6 +51,11 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "baseline-browser-mapping": "latest"
+    }
   },
   "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
 }
