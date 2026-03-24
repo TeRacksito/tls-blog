@@ -20,9 +20,9 @@
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "@prisma/orm-postgres": "8.0.0-rc.20",
+    "@puckeditor/core": "^0.21.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "@puckeditor/core": "^0.21.1",
     "dotenv": "^17.2.3",
     "lucide-react": "^0.577.0",
     "next": "16.0.7",
@@ -40,7 +40,7 @@
     "@types/pg": "^8.15.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "baseline-browser-mapping": "^2.10.9",
+    "baseline-browser-mapping": "latest",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
     "eslint-config-prettier": "^10.1.8",
@@ -52,6 +52,11 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "baseline-browser-mapping": "latest"
+    }
   },
   "packageManager": "pnpm@12.15.0+sha512.b3951d6d6ff4a9f13dc7cf56cd28d2b8eb37dbcc9c68e52e1e1191873ea9f82a017287ab50baadc5ccc494f036c67c0e47eb13608c2fa36f47711b61ea128e61"
 }
