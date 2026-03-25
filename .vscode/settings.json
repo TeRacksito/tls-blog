@@ -3,5 +3,6 @@
   "cSpell.enabled": true,
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "tailwindCSS.classFunctions": ["cva", "cx"]
 }
