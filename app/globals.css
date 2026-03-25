@@ -34,6 +34,8 @@
   --accent: #e0cfac;
   --accent-foreground: #2c2024;
   --destructive: #f9281d;
+  --success: #1cb6a6;
+  --warning: #fdc010;
   --border: #bfa780;
   --input: #bfa780;
   --ring: #815f2d;
@@ -50,11 +52,6 @@
   --sidebar-accent-foreground: #2c2024;
   --sidebar-border: #e1e1e1;
   --sidebar-ring: #a1a1a1;
-
-  --font-sans: Nunito, sans-serif;
-  --font-serif: PT Serif, serif;
-  --font-mono: JetBrains Mono, monospace;
-  --font-pixel: 'Press Start 2P', 'VT323', monospace;
 
   --radius: 0.25rem;
   --pixel-border-width: 2px;
@@ -108,6 +105,8 @@
   --accent: #3d332b;
   --accent-foreground: #e0cfac;
   --destructive: #f9281d;
+  --success: #1cb6a6;
+  --warning: #fdc010;
   --border: #3d332b;
   --input: #3d332b;
   --ring: #8b906e;
@@ -174,6 +173,8 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -190,10 +191,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
