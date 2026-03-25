@@ -22,11 +22,10 @@ function Surface({
   className,
   hasShadow,
   hasTextShadow,
-  asChild = true,
   ...props
-}: React.HTMLAttributes<HTMLElement> &
-  VariantProps<typeof surfaceVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot.Root : 'div';
+}: Omit<React.HTMLAttributes<HTMLElement>, 'children'> &
+  VariantProps<typeof surfaceVariants> & { children: React.ReactElement }) {
+  const Comp = Slot.Root;
   return (
     <Comp
       className={surfaceVariants({ hasShadow, hasTextShadow, className })}
