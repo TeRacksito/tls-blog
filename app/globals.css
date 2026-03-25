@@ -59,14 +59,37 @@
   --radius: 0.25rem;
   --pixel-border-width: 2px;
 
-  --shadow-2xs: 1px 1px 0 0 rgb(0 0 0 / 0.2);
-  --shadow-xs: 1px 1px 0 0 rgb(0 0 0 / 0.25);
-  --shadow-sm: 2px 2px 0 0 rgb(0 0 0 / 0.25);
-  --shadow: 2px 2px 0 0 rgb(0 0 0 / 0.3);
-  --shadow-md: 3px 3px 0 0 rgb(0 0 0 / 0.3);
-  --shadow-lg: 4px 4px 0 0 rgb(0 0 0 / 0.3);
-  --shadow-xl: 6px 6px 0 0 rgb(0 0 0 / 0.3);
-  --shadow-2xl: 8px 8px 0 0 rgb(0 0 0 / 0.35);
+  --shadow-2xs-base: 1px 1px 0;
+  --shadow-2xs-color: rgb(0 0 0 / 0.2);
+  --shadow-2xs: var(--shadow-2xs-base) 0 var(--shadow-2xs-color);
+
+  --shadow-xs-base: 1px 1px 0;
+  --shadow-xs-color: rgb(0 0 0 / 0.25);
+  --shadow-xs: var(--shadow-xs-base) 0 var(--shadow-xs-color);
+
+  --shado-sm-base: 2px 2px 0;
+  --shadow-sm-color: rgb(0 0 0 / 0.25);
+  --shadow-sm: var(--shado-sm-base) 0 var(--shadow-sm-color);
+
+  --shadow-base: 2px 2px 0;
+  --shadow-color: rgb(0 0 0 / 0.3);
+  --shadow: var(--shadow-base) 0 var(--shadow-color);
+
+  --shadow-md-base: 3px 3px 0;
+  --shadow-md-color: rgb(0 0 0 / 0.3);
+  --shadow-md: var(--shadow-md-base) 0 var(--shadow-md-color);
+
+  --shadow-lg-base: 4px 4px 0;
+  --shadow-lg-color: rgb(0 0 0 / 0.3);
+  --shadow-lg: var(--shadow-lg-base) 0 var(--shadow-lg-color);
+
+  --shadow-xl-base: 6px 6px 0;
+  --shadow-xl-color: rgb(0 0 0 / 0.3);
+  --shadow-xl: var(--shadow-xl-base) 0 var(--shadow-xl-color);
+
+  --shadow-2xl-base: 8px 8px 0;
+  --shadow-2xl-color: rgb(0 0 0 / 0.35);
+  --shadow-2xl: var(--shadow-2xl-base) 0 var(--shadow-2xl-color);
 }
 
 .dark {
@@ -102,14 +125,37 @@
   --sidebar-border: #3d332b;
   --sidebar-ring: #8b906e;
 
-  --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-  --shadow-sm: 2px 2px 0 0 rgb(0 0 0 / 0.35);
-  --shadow: 2px 2px 0 0 rgb(0 0 0 / 0.4);
-  --shadow-md: 3px 3px 0 0 rgb(0 0 0 / 0.45);
-  --shadow-lg: 4px 4px 0 0 rgb(0 0 0 / 0.5);
-  --shadow-xl: 6px 6px 0 0 rgb(0 0 0 / 0.5);
-  --shadow-2xl: 8px 8px 0 0 rgb(0 0 0 / 0.55);
+  --shadow-2xs-base: 0 1px 3px;
+  --shadow-2xs-color: rgb(0 0 0 / 0.05);
+  --shadow-2xs: var(--shadow-2xs-base) 0 var(--shadow-2xs-color);
+
+  --shadow-xs-base: 0 1px 3px;
+  --shadow-xs-color: rgb(0 0 0 / 0.05);
+  --shadow-xs: var(--shadow-xs-base) 0 var(--shadow-xs-color);
+
+  --shadow-sm-base: 2px 2px 0;
+  --shadow-sm-color: rgb(0 0 0 / 0.35);
+  --shadow-sm: var(--shadow-sm-base) 0 var(--shadow-sm-color);
+
+  --shadow-base: 2px 2px 0;
+  --shadow-color: rgb(0 0 0 / 0.4);
+  --shadow: var(--shadow-base) 0 var(--shadow-color);
+
+  --shadow-md-base: 3px 3px 0;
+  --shadow-md-color: rgb(0 0 0 / 0.45);
+  --shadow-md: var(--shadow-md-base) 0 var(--shadow-md-color);
+
+  --shadow-lg-base: 4px 4px 0;
+  --shadow-lg-color: rgb(0 0 0 / 0.5);
+  --shadow-lg: var(--shadow-lg-base) 0 var(--shadow-lg-color);
+
+  --shadow-xl-base: 6px 6px 0;
+  --shadow-xl-color: rgb(0 0 0 / 0.5);
+  --shadow-xl: var(--shadow-xl-base) 0 var(--shadow-xl-color);
+
+  --shadow-2xl-base: 8px 8px 0;
+  --shadow-2xl-color: rgb(0 0 0 / 0.55);
+  --shadow-2xl: var(--shadow-2xl-base) 0 var(--shadow-2xl-color);
 }
 
 @theme inline {
