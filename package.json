@@ -14,7 +14,9 @@
     "p:gen": "prisma generate",
     "p:mig": "prisma migrate dev",
     "p:res": "prisma migrate reset",
-    "p:seed": "prisma db seed"
+    "p:seed": "prisma db seed",
+    "compose:up": "docker compose up -d",
+    "compose:down": "docker compose down"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
