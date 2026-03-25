@@ -22,7 +22,7 @@ function Surface({
   className,
   hasShadow,
   hasTextShadow,
-  asChild,
+  asChild = true,
   ...props
 }: React.HTMLAttributes<HTMLElement> &
   VariantProps<typeof surfaceVariants> & { asChild?: boolean }) {
