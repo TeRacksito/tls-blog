@@ -3,6 +3,14 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 const headingSecondaryVariants = cva('text-lg font-semibold');
 
+/**
+ * Third level heading component, typically used for sub-section titles or less prominent headings.
+ *
+ * Primitive component rendering an `<h3>` element.
+ *
+ * @param className - Additional class names to apply to the heading.
+ * @param props... - Other HTML attributes for the heading element.
+ */
 function HeadingSecondary({
   className,
   ...props

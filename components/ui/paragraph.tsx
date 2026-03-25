@@ -22,6 +22,17 @@ const paragraphVariants = cva('', {
   },
 });
 
+/**
+ * Paragraph component for block and inline text content.
+ *
+ * Primitive component that can render as a `<p>` or `<span>` element.
+ *
+ * @param className - Additional class names to apply to the paragraph.
+ * @param as - The HTML element to render, either 'p' or 'span'. This determines block or inline behavior.
+ * @param size - The size variant of the paragraph text.
+ * @param asChild - If true, renders the component as a child of another component using Radix's Slot.
+ * @param props... - Other HTML attributes for the paragraph element.
+ */
 function Paragraph({
   className,
   as = 'p',
