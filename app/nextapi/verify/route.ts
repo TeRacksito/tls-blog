@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getAuthToken } from '@/lib/auth/cookies-server';
-import { verifyToken } from '@/lib/api/client';
+import { deleteAuthToken } from '@/lib/auth/cookies-server';
+import { getServerAuthSession } from '@/lib/auth/get-server-auth-session';
 
 /**
  * Token verification API endpoint.
@@ -10,23 +10,19 @@ import { verifyToken } from '@/lib/api/client';
  */
 export async function GET() {
   try {
-    const token = await getAuthToken();
+    const session = await getServerAuthSession();
 
-    if (!token) {
+    if (!session) {
+      await deleteAuthToken();
       return NextResponse.json({ valid: false }, { status: 401 });
     }
 
-    const result = await verifyToken(token);
-
-    if (result.valid) {
-      return NextResponse.json({
-        valid: true,
-        user: result.user,
-        exp: result.exp,
-      });
-    }
-
-    return NextResponse.json({ valid: false }, { status: 401 });
+    return NextResponse.json({
+      valid: true,
+      user: session.user,
+      exp: session.exp,
+      iat: session.iat,
+    });
   } catch (error) {
     console.error('Token verification error:', error);
     return NextResponse.json({ valid: false }, { status: 500 });

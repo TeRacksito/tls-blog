@@ -84,6 +84,18 @@ export default function Home() {
                   >
                     Protected Example
                   </Link>
+                  <Link
+                    href="/editor/home"
+                    className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+                  >
+                    Open Editor
+                  </Link>
+                  <Link
+                    href="/preview/home"
+                    className="rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                  >
+                    Open Preview
+                  </Link>
                   <button
                     onClick={logout}
                     className="rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"

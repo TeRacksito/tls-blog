@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { authenticateUser } from '@/lib/api/client';
+import { authenticateUpstreamUser } from '@/lib/auth/authenticate-upstream-user';
 import { setAuthToken } from '@/lib/auth/cookies-server';
 import type { LoginRequest } from '@/lib/types/auth';
 
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await authenticateUser(body);
+    const result = await authenticateUpstreamUser(body);
 
     if (result.verified && result.token) {
       await setAuthToken(result.token);

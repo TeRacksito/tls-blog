@@ -119,3 +119,19 @@ model TimelineUpdate {
   @@index([projectId, createdAt(sort: Desc)])
   @@index([authorId])
 }
+
+model EditablePage {
+  id          Int       @id @default(autoincrement())
+  slug        String    @unique @db.VarChar(191)
+  title       String    @db.VarChar(255)
+  content     Json
+  isPublished Boolean   @default(false)
+  revision    Int       @default(1)
+  publishedAt DateTime?
+  updatedBy   String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([isPublished, updatedAt])
+  @@index([updatedBy, updatedAt])
+}
