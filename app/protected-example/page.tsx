@@ -1,7 +1,7 @@
 'use client';
 
-import { useAuth } from '@/components/auth/AuthProvider';
-import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
+import { useAuth } from '@/components/featured/auth/auth-provider';
+import { ProtectedRoute } from '@/components/featured/auth/protected-route';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
