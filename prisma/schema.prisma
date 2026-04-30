@@ -20,6 +20,24 @@ model ConnectionTestTitle {
   description String
 }
 
+enum CollaboratorRole {
+  OWNER
+  EDITOR
+}
+
+model Collaborator {
+  id        Int              @id @default(autoincrement())
+  projectId Int
+  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String           @db.VarChar(255)
+  role      CollaboratorRole @default(EDITOR)
+  joinedAt  DateTime         @default(now())
+
+  @@unique([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
+}
+
 enum ProjectStatus {
   PLANNING
   BUILDING
@@ -39,13 +57,13 @@ model Project {
   zoom            Int?
   coverImage      String?
   tags            String[]         @default([])
-  ownerUsername   String           @db.VarChar(255)
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   milestones      Milestone[]
   timelineUpdates TimelineUpdate[]
+  collaborators   Collaborator[]
 
-  @@index([ownerUsername, status, createdAt, worldname])
+  @@index([status, createdAt, worldname])
 }
 
 model Milestone {
