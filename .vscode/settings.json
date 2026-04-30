@@ -1,5 +1,13 @@
 {
-  "cSpell.words": ["autoincrement", "datasource", "nextapi", "postgresql"],
+  "cSpell.words": [
+    "autoincrement",
+    "datasource",
+    "mapname",
+    "minecraft",
+    "nextapi",
+    "postgresql",
+    "worldname"
+  ],
   "cSpell.enabled": true,
   "files.associations": {
     "*.css": "tailwindcss"
