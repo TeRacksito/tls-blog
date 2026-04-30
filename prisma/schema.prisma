@@ -38,6 +38,19 @@ model Collaborator {
   @@index([userId])
 }
 
+model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(255)
+  slug      String   @unique @db.VarChar(255)
+  color     String?  @db.VarChar(50) // enough for hex colors and color names
+  createdAt DateTime @default(now())
+
+  projects Project[]
+
+  @@index([name])
+  @@index([slug])
+}
+
 enum ProjectStatus {
   PLANNING
   BUILDING
@@ -56,12 +69,12 @@ model Project {
   z               Float?
   zoom            Int?
   coverImage      String?
-  tags            String[]         @default([])
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   milestones      Milestone[]
   timelineUpdates TimelineUpdate[]
   collaborators   Collaborator[]
+  tags            Tag[]
 
   @@index([status, createdAt, worldname])
 }
