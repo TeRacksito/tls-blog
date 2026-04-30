@@ -3,8 +3,11 @@
     "autoincrement",
     "postgres",
     "datasource",
+    "mapname",
+    "minecraft",
     "nextapi",
-    "postgresql"
+    "postgresql",
+    "worldname"
   ],
   "cSpell.enabled": true,
   "files.associations": {
