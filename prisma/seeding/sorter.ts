@@ -1,4 +1,77 @@
-import { ExecutionLevel, SeederGraph, SeederModule } from './types';
+import {
+  ExecutionLevel,
+  ImportedSeederGraph,
+  SeederGraph,
+  SeederModule,
+} from './types';
+
+function detectCircularImports(seederModules: SeederModule[]): string | null {
+  const seederModulesByFile = new Map<string, SeederModule>();
+  const importGraph: ImportedSeederGraph = new Map();
+
+  for (const seederModule of seederModules) {
+    seederModulesByFile.set(seederModule.filePath, seederModule);
+    importGraph.set(seederModule.filePath, []);
+  }
+
+  for (const seederModule of seederModules) {
+    const dependencies = seederModule.seeder.dependencies || [];
+    const importedFiles: string[] = [];
+
+    for (const depSeeder of dependencies) {
+      if (!depSeeder || depSeeder.name === undefined) {
+        const possibleDep = seederModules.find(
+          (s) => !seederModule.filePath.includes(s.filePath)
+        );
+        if (possibleDep) {
+          importedFiles.push(possibleDep.filePath);
+        }
+      } else {
+        const depModule = seederModules.find((s) => s.name === depSeeder.name);
+        if (depModule) {
+          importedFiles.push(depModule.filePath);
+        }
+      }
+    }
+
+    importGraph.set(seederModule.filePath, importedFiles);
+  }
+
+  function findCycle(
+    current: string,
+    visited: Set<string>,
+    path: string[]
+  ): string[] | null {
+    if (path.includes(current)) {
+      const cycleStart = path.indexOf(current);
+      return path.slice(cycleStart).concat(current);
+    }
+
+    if (visited.has(current)) return null;
+
+    visited.add(current);
+    path.push(current);
+
+    const neighbors = importGraph.get(current) || [];
+    for (const neighbor of neighbors) {
+      const cycle = findCycle(neighbor, visited, [...path]);
+      if (cycle) return cycle;
+    }
+
+    return null;
+  }
+
+  for (const filePath of importGraph.keys()) {
+    const cycle = findCycle(filePath, new Set(), []);
+    if (cycle) {
+      return `Circular import detected among seeder files: ${cycle
+        .map((f) => `'${f}'`)
+        .join(' -> ')}. Please check the imports of these files.`;
+    }
+  }
+
+  return null;
+}
 
 export function topologicalSort(
   seederModules: SeederModule[]
@@ -25,6 +98,9 @@ export function topologicalSort(
 
     for (const depSeeder of dependencies) {
       if (!depSeeder || depSeeder.name === undefined) {
+        const circularImportError = detectCircularImports(seederModules);
+        if (circularImportError) throw new Error(circularImportError);
+
         throw new Error(
           `Seeder '${seederModule.name}' in file '${seederModule.filePath}' has an undefined dependency.
           This usually indicates a circular dependency or a missing import. Please check the dependencies of this seeder.`

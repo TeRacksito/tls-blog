@@ -20,5 +20,6 @@ export type SeederModule = {
 };
 
 export type SeederGraph = Map<string, Set<string>>;
+export type ImportedSeederGraph = Map<string, string[]>;
 
 export type ExecutionLevel = SeederModule[];
