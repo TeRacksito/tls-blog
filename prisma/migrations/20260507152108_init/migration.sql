@@ -1,5 +1,39 @@
 -- CreateEnum
+CREATE TYPE "CollaboratorRole" AS ENUM ('OWNER', 'EDITOR');
+
+-- CreateEnum
 CREATE TYPE "ProjectStatus" AS ENUM ('PLANNING', 'BUILDING', 'COMPLETED');
+
+-- CreateTable
+CREATE TABLE "ConnectionTestTitle" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "ConnectionTestTitle_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Collaborator" (
+    "id" SERIAL NOT NULL,
+    "projectId" INTEGER NOT NULL,
+    "userId" VARCHAR(255) NOT NULL,
+    "role" "CollaboratorRole" NOT NULL DEFAULT 'EDITOR',
+    "joinedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Collaborator_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Tag" (
+    "id" SERIAL NOT NULL,
+    "name" VARCHAR(255) NOT NULL,
+    "slug" VARCHAR(255) NOT NULL,
+    "color" VARCHAR(50),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Tag_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Project" (
@@ -14,8 +48,6 @@ CREATE TABLE "Project" (
     "z" DOUBLE PRECISION,
     "zoom" INTEGER,
     "coverImage" TEXT,
-    "tags" TEXT[] DEFAULT ARRAY[]::TEXT[],
-    "ownerUsername" VARCHAR(255) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -82,8 +114,53 @@ CREATE TABLE "TimelineUpdate" (
     CONSTRAINT "TimelineUpdate_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "EditablePage" (
+    "id" SERIAL NOT NULL,
+    "slug" VARCHAR(191) NOT NULL,
+    "title" VARCHAR(255) NOT NULL,
+    "content" JSONB NOT NULL,
+    "isPublished" BOOLEAN NOT NULL DEFAULT false,
+    "revision" INTEGER NOT NULL DEFAULT 1,
+    "publishedAt" TIMESTAMP(3),
+    "updatedBy" VARCHAR(255),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "EditablePage_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_ProjectToTag" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL,
+
+    CONSTRAINT "_ProjectToTag_AB_pkey" PRIMARY KEY ("A","B")
+);
+
 -- CreateIndex
-CREATE INDEX "Project_ownerUsername_status_createdAt_worldname_idx" ON "Project"("ownerUsername", "status", "createdAt", "worldname");
+CREATE INDEX "Collaborator_projectId_idx" ON "Collaborator"("projectId");
+
+-- CreateIndex
+CREATE INDEX "Collaborator_userId_idx" ON "Collaborator"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Collaborator_projectId_userId_key" ON "Collaborator"("projectId", "userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_name_key" ON "Tag"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tag_slug_key" ON "Tag"("slug");
+
+-- CreateIndex
+CREATE INDEX "Tag_name_idx" ON "Tag"("name");
+
+-- CreateIndex
+CREATE INDEX "Tag_slug_idx" ON "Tag"("slug");
+
+-- CreateIndex
+CREATE INDEX "Project_status_createdAt_worldname_idx" ON "Project"("status", "createdAt", "worldname");
 
 -- CreateIndex
 CREATE INDEX "Milestone_projectId_order_idx" ON "Milestone"("projectId", "order");
@@ -121,6 +198,21 @@ CREATE INDEX "TimelineUpdate_projectId_createdAt_idx" ON "TimelineUpdate"("proje
 -- CreateIndex
 CREATE INDEX "TimelineUpdate_authorId_idx" ON "TimelineUpdate"("authorId");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "EditablePage_slug_key" ON "EditablePage"("slug");
+
+-- CreateIndex
+CREATE INDEX "EditablePage_isPublished_updatedAt_idx" ON "EditablePage"("isPublished", "updatedAt");
+
+-- CreateIndex
+CREATE INDEX "EditablePage_updatedBy_updatedAt_idx" ON "EditablePage"("updatedBy", "updatedAt");
+
+-- CreateIndex
+CREATE INDEX "_ProjectToTag_B_index" ON "_ProjectToTag"("B");
+
+-- AddForeignKey
+ALTER TABLE "Collaborator" ADD CONSTRAINT "Collaborator_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
 -- AddForeignKey
 ALTER TABLE "Milestone" ADD CONSTRAINT "Milestone_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -135,3 +227,9 @@ ALTER TABLE "TimelineUpdate" ADD CONSTRAINT "TimelineUpdate_projectId_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "TimelineUpdate" ADD CONSTRAINT "TimelineUpdate_linkedMilestoneId_fkey" FOREIGN KEY ("linkedMilestoneId") REFERENCES "Milestone"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_ProjectToTag" ADD CONSTRAINT "_ProjectToTag_A_fkey" FOREIGN KEY ("A") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_ProjectToTag" ADD CONSTRAINT "_ProjectToTag_B_fkey" FOREIGN KEY ("B") REFERENCES "Tag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
