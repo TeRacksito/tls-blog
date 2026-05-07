@@ -1,25 +1,35 @@
 import { PrismaClient } from '@/app/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
+import { join } from 'path';
+import { runSeeders } from './seeding/runner';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
+const seedsDir = join(__dirname, 'seeding', 'seeders');
+
+/**
+ * Abstract type for the ORM client.
+ */
+export type DbClient = typeof prisma;
+
+/**
+ * Abstract type for the ORM transaction context.
+ */
+export type TransactionContext = Parameters<
+  Parameters<DbClient['$transaction']>[0]
+>[0];
+
 export async function main() {
+  console.info('Starting database seeding process...');
+
   try {
-    await prisma.connectionTestTitle.create({
-      data: {
-        id: 1,
-        title: 'Connection Test!',
-        description: 'This is a test title to verify the database connection.',
-      },
-    });
-  } catch (e) {
-    if (e instanceof PrismaClientKnownRequestError) {
-      if (e.code !== 'P2002') {
-        throw e;
-      }
-    }
+    await runSeeders(prisma, seedsDir);
+  } catch (error) {
+    console.error('Error seeding database: ', error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
