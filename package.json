@@ -15,6 +15,8 @@
     "p:mig": "prisma migrate dev",
     "p:res": "prisma migrate reset",
     "p:seed": "prisma db seed",
+    "p:seed:info": "tsx prisma/seeding/info.runnable.ts",
+    "p:seed:new": "tsx prisma/seeding/new.runnable.ts",
     "compose:up": "docker compose up -d",
     "compose:down": "docker compose down"
   },
