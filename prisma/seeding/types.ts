@@ -11,6 +11,10 @@ export type SeederOptions = {
    * This allows seeders to be idempotent and safely re-run without failing due to existing data.
    */
   suppressDuplicateKeyErrors?: boolean;
+  /**
+   * If true, indicates that the seeder should only be run in development environments.
+   */
+  devOnly?: boolean;
 };
 
 /**

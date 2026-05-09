@@ -16,6 +16,16 @@ async function executeSeeder(
   db: DbClient,
   id: string
 ): Promise<void> {
+  if (
+    seederModule.seeder.options?.devOnly &&
+    process.env.NODE_ENV !== 'development'
+  ) {
+    console.info(
+      `\t[${id}] Skipping seeder '${seederModule.name}' from file '${seederModule.filePath}' because it is marked as devOnly and the current environment is '${process.env.NODE_ENV}'.`
+    );
+    return;
+  }
+
   console.info(
     `\t[${id}] Executing seeder '${seederModule.name}' from file '${seederModule.filePath}'...`
   );
