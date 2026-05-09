@@ -1,3 +1,9 @@
+/**
+ * An utility script to create a new seeder file with a predefined template.
+ * @author TeRacksito
+ * @TeRacksito
+ */
+
 import { createFile } from '@/lib/util/create-file';
 import { safePathParse } from '@/lib/util/safe-path-parse';
 import { join } from 'node:path';

@@ -5,6 +5,13 @@ import {
   SeederModule,
 } from './types';
 
+/**
+ * Cycle detection algorithm.
+ * Generates an directed graph of seeders and performs a depth-first search to find cycles.
+ * @returns Error message including the cycle path if a circular import is detected, or null if no cycles are found.
+ * @author TeRacksito
+ * @TeRacksito Developed during Atos and Eviden internship program on April 2025.
+ */
 function detectCircularImports(seederModules: SeederModule[]): string | null {
   const seederModulesByFile = new Map<string, SeederModule>();
   const importGraph: ImportedSeederGraph = new Map();
@@ -73,6 +80,12 @@ function detectCircularImports(seederModules: SeederModule[]): string | null {
   return null;
 }
 
+/**
+ * Performs a topological sort on seeders based on their predefined dependencies.
+ * @returns Array of execution levels, where each level is an array of SeederModules that can be executed in parallel.
+ * @author TeRacksito
+ * @TeRacksito Developed during Atos and Eviden internship program on April 2025.
+ */
 export function topologicalSort(
   seederModules: SeederModule[]
 ): ExecutionLevel[] {
