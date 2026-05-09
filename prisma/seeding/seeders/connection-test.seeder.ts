@@ -2,7 +2,6 @@ import { Seeder } from '../types';
 
 export default {
   name: 'connection-test',
-  dependencies: [],
   options: {
     suppressDuplicateKeyErrors: true,
   },

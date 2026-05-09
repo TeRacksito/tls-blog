@@ -5,6 +5,8 @@ import { pathToFileURL } from 'node:url';
 
 /**
  * Recursively discovers all .seeder.ts files in the given directory.
+ * @author TeRacksito
+ * @TeRacksito
  */
 export async function discoverSeedFiles(seedsDir: string): Promise<string[]> {
   const files: string[] = [];
@@ -38,6 +40,13 @@ export async function discoverSeedFiles(seedsDir: string): Promise<string[]> {
   return files;
 }
 
+/**
+ * Generates SeederModule objects by dynamically importing the seeder files at the given paths.
+ * Each seeder file must export a default Seeder object.
+ * @returns An array of SeederModule objects containing the seeder name, relative file path, and the Seeder instance.
+ * @author TeRacksito
+ * @TeRacksito
+ */
 export async function loadSeederModules(
   filePaths: string[],
   seedsDir: string

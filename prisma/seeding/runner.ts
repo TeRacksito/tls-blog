@@ -4,6 +4,13 @@ import { discoverSeedFiles, loadSeederModules } from './loader';
 import { topologicalSort } from './sorter';
 import { ExecutionLevel, SeederModule } from './types';
 
+/**
+ * Executes a single seeder within a database transaction.
+ * @param id A string identifier for logging purposes,
+ * typically in the format 'LXX-YYY' where XX is the execution level and YYY is the index of the seeder within that level.
+ * @author TeRacksito
+ * @TeRacksito
+ */
 async function executeSeeder(
   seederModule: SeederModule,
   db: DbClient,
@@ -46,6 +53,12 @@ async function executeSeeder(
   }
 }
 
+/**
+ * Executes all seeders in the given execution level in parallel.
+ * @param levelIndex The index of the execution level (0-based). Used for logging purposes to indicate the current level being executed.
+ * @author TeRacksito
+ * @TeRacksito
+ */
 async function executeLevel(
   level: ExecutionLevel,
   levelIndex: number,
@@ -67,6 +80,12 @@ async function executeLevel(
   );
 }
 
+/**
+ * Discovers, sorts, and executes seeders found in the specified directory.
+ * @param seedsDir The directory to search for seeder files. Each seeder file must export a default Seeder object.
+ * @author TeRacksito
+ * @TeRacksito
+ */
 export async function runSeeders(
   db: DbClient,
   seedsDir: string

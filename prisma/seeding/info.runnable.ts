@@ -1,3 +1,12 @@
+/**
+ * An utility script to analyze and display information about the seeders configuration, including their dependencies and execution plan.
+ * This can be used to verify that seeders are set up correctly before running them.
+ * It discovers seeder files, loads their modules, performs a topological sort based on dependencies, and prints out the execution levels and details of each seeder;
+ * without any real database operations.
+ * @author TeRacksito
+ * @TeRacksito
+ */
+
 import { join } from 'node:path';
 import { discoverSeedFiles, loadSeederModules } from './loader';
 import { topologicalSort } from './sorter';
@@ -60,7 +69,7 @@ async function main(): Promise<void> {
 
   console.info(`\nSeeder details:`);
   seederModules.forEach((mod) => {
-    const depNames = mod.seeder.dependencies.map((d) => d.name);
+    const depNames = mod.seeder.dependencies?.map((d) => d.name) || [];
     const depBy = dependant.get(mod.name) || [];
     console.info(
       `- ${mod.name} (depends on: [${depNames.join(', ')}], depended by: [${depBy.join(', ')}], options: ${JSON.stringify(mod.seeder.options)})`
