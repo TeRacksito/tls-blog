@@ -1,0 +1,171 @@
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+namespace public {
+  model Project {
+    id              Int                    @id(map: "Project_pkey") @default(autoincrement())
+    title           String
+    description     String?
+    status          pg.enum(ProjectStatus) @default("PLANNING")
+    worldname       String?
+    mapname         String?
+    x               Float?
+    y               Float?
+    z               Float?
+    zoom            Int?
+    coverImage      String?
+    createdAt       TimestampString(3)     @default(now())
+    updatedAt       TimestampString(3)
+    collaborators   Collaborator[]
+    milestones      Milestone[]
+    timelineUpdates TimelineUpdate[]
+    projectToTags   ProjectToTag[]
+
+    @@index([status, createdAt, worldname], map: "Project_status_createdAt_worldname_idx")
+  }
+
+  model Collaborator {
+    id        Int                       @id(map: "Collaborator_pkey") @default(autoincrement())
+    projectId Int
+    userId    VarChar(255)
+    role      pg.enum(CollaboratorRole) @default("EDITOR")
+    joinedAt  TimestampString(3)        @default(now())
+    project   Project                   @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "Collaborator_projectId_fkey")
+
+    @@index([projectId], map: "Collaborator_projectId_idx")
+    @@index([projectId, userId], map: "Collaborator_projectId_userId_key", unique: true)
+    @@index([userId], map: "Collaborator_userId_idx")
+  }
+
+  model ConnectionTestTitle {
+    id          Int    @id(map: "ConnectionTestTitle_pkey") @default(autoincrement())
+    title       String
+    description String
+  }
+
+  model EditablePage {
+    id          Int                 @id(map: "EditablePage_pkey") @default(autoincrement())
+    slug        VarChar(191)
+    title       VarChar(255)
+    content     Jsonb
+    isPublished Boolean             @default(false)
+    revision    Int                 @default(1)
+    publishedAt TimestampString(3)?
+    updatedBy   VarChar(255)?
+    createdAt   TimestampString(3)  @default(now())
+    updatedAt   TimestampString(3)
+
+    @@index([isPublished, updatedAt], map: "EditablePage_isPublished_updatedAt_idx")
+    @@index([slug], map: "EditablePage_slug_key", unique: true)
+    @@index([updatedBy, updatedAt], map: "EditablePage_updatedBy_updatedAt_idx")
+  }
+
+  model Milestone {
+    id                 Int                 @id(map: "Milestone_pkey") @default(autoincrement())
+    projectId          Int
+    title              String
+    description        String?
+    order              Int                 @default(0)
+    isCompleted        Boolean             @default(false)
+    completedAt        TimestampString(3)?
+    createdAt          TimestampString(3)  @default(now())
+    updatedAt          TimestampString(3)
+    milestoneResources MilestoneResource[]
+    timelineUpdates    TimelineUpdate[]
+    project            Project             @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "Milestone_projectId_fkey", index: "Milestone_projectId_order_idx")
+
+    @@index([projectId, order], map: "Milestone_projectId_order_idx")
+  }
+
+  model ResourceItem {
+    id                 Int                 @id(map: "ResourceItem_pkey") @default(autoincrement())
+    name               String
+    icon               String?
+    description        String?
+    minecraftId        String?
+    category           String?
+    stackSize          Int?
+    lastSyncedAt       TimestampString(3)?
+    createdAt          TimestampString(3)  @default(now())
+    updatedAt          TimestampString(3)
+    milestoneResources MilestoneResource[]
+
+    @@index([category], map: "ResourceItem_category_idx")
+    @@index([minecraftId], map: "ResourceItem_minecraftId_idx")
+    @@index([minecraftId], map: "ResourceItem_minecraftId_key", unique: true)
+    @@index([name], map: "ResourceItem_name_idx")
+    @@index([name], map: "ResourceItem_name_key", unique: true)
+  }
+
+  model MilestoneResource {
+    milestoneId     Int
+    resourceId      Int
+    targetQuantity  Int
+    currentQuantity Int                @default(0)
+    fulfilled       Boolean            @default(false)
+    notes           String?
+    createdAt       TimestampString(3) @default(now())
+    updatedAt       TimestampString(3)
+    milestone       Milestone          @relation(fields: [milestoneId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "MilestoneResource_milestoneId_fkey", index: "MilestoneResource_pkey")
+    resource        ResourceItem       @relation(fields: [resourceId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "MilestoneResource_resourceId_fkey")
+
+    @@id([milestoneId, resourceId], map: "MilestoneResource_pkey")
+    @@index([fulfilled, milestoneId], map: "MilestoneResource_fulfilled_milestoneId_idx")
+    @@index([milestoneId, fulfilled], map: "MilestoneResource_milestoneId_fulfilled_idx")
+    @@index([milestoneId, targetQuantity, currentQuantity], map: "MilestoneResource_milestoneId_targetQuantity_currentQuantit_idx")
+    @@index([resourceId], map: "MilestoneResource_resourceId_idx")
+  }
+
+  model Tag {
+    id            Int                @id(map: "Tag_pkey") @default(autoincrement())
+    name          VarChar(255)
+    slug          VarChar(255)
+    color         VarChar(50)?
+    createdAt     TimestampString(3) @default(now())
+    projectToTags ProjectToTag[]
+
+    @@index([name], map: "Tag_name_idx")
+    @@index([name], map: "Tag_name_key", unique: true)
+    @@index([slug], map: "Tag_slug_idx")
+    @@index([slug], map: "Tag_slug_key", unique: true)
+  }
+
+  model ProjectToTag {
+    a       Int     @map("A")
+    b       Int     @map("B")
+    project Project @relation(fields: [a], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "_ProjectToTag_A_fkey", index: "_ProjectToTag_AB_pkey")
+    tag     Tag     @relation(fields: [b], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "_ProjectToTag_B_fkey")
+
+    @@id([a, b], map: "_ProjectToTag_AB_pkey")
+    @@index([b], map: "_ProjectToTag_B_index")
+    @@map("_ProjectToTag")
+  }
+
+  model TimelineUpdate {
+    id                Int                @id(map: "TimelineUpdate_pkey") @default(autoincrement())
+    projectId         Int
+    title             String
+    content           Jsonb
+    images            String?[]?         @default([])
+    linkedMilestoneId Int?
+    authorId          VarChar(255)
+    createdAt         TimestampString(3) @default(now())
+    updatedAt         TimestampString(3)
+    linkedMilestone   Milestone?         @relation(fields: [linkedMilestoneId], references: [id], onDelete: SetNull, onUpdate: Cascade, map: "TimelineUpdate_linkedMilestoneId_fkey", index: false)
+    project           Project            @relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "TimelineUpdate_projectId_fkey", index: "TimelineUpdate_projectId_createdAt_idx")
+
+    @@index([authorId], map: "TimelineUpdate_authorId_idx")
+    @@index([projectId, createdAt], map: "TimelineUpdate_projectId_createdAt_idx")
+  }
+
+  native_enum CollaboratorRole {
+    OWNER = "OWNER"
+    EDITOR = "EDITOR"
+  }
+
+  native_enum ProjectStatus {
+    PLANNING = "PLANNING"
+    BUILDING = "BUILDING"
+    COMPLETED = "COMPLETED"
+  }
+}

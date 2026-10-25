@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@/app/generated/prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
+import { contractFromJson } from '@prisma/orm-postgres/static';
+import { Contract } from '@/app/generated/prisma/contract';
+import contractJson from '@/app/generated/prisma/contract.json';
+import postgres from '@prisma/orm-postgres/runtime';
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
-const prisma = new PrismaClient({ adapter });
+const contract = contractFromJson<Contract>(contractJson);
+const db = postgres({ url: process.env.DATABASE_URL, contract });
 
 /**
  * Public endpoint to test database connection.
@@ -13,10 +15,11 @@ const prisma = new PrismaClient({ adapter });
  */
 export async function GET() {
   try {
-    const testTitle = await prisma.connectionTestTitle.findUnique({
-      where: { id: 1 },
-      select: { id: true, title: true, description: true },
-    });
+    const testTitle = await db.orm.public.ConnectionTestTitle.whereUnique({
+      id: 1,
+    })
+      .select('id', 'title', 'description')
+      .first();
 
     if (!testTitle) {
       return NextResponse.json({ error: 'No data found' }, { status: 404 });

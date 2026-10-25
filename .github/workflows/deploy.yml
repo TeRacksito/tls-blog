@@ -42,7 +42,6 @@ jobs:
 
             # - ensure dependencies
             pnpm i
-            docker compose up -d --remove-orphans
 
             # - update database
             pnpx prisma migrate deploy
